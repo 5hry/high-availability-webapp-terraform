@@ -1,1 +1,1 @@
-# high-availability-webapp-terraform
+# Build a high availability web application using Terraform
