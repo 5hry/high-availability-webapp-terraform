@@ -4,6 +4,8 @@
 
 Dự án này triển khai một ứng dụng web với kiến trúc **High Availability** trên nền tảng **AWS** sử dụng **Terraform** để quản lý hạ tầng. Ứng dụng được thiết kế để đảm bảo tính sẵn sàng cao, khả năng mở rộng và dự phòng khi có sự cố xảy ra. 
 
+![Architecture](./imgs/main-arc.png)
+Source code cho ứng dụng web [tại đây](https://github.com/5hry/e-commerce-web-bluegreen-deploy)
 ## Features
 
 - **Tự động mở rộng**: Ứng dụng có khả năng điều chỉnh tài nguyên một cách tự động dựa trên tải thực tế, giúp tối ưu hóa hiệu suất và chi phí.

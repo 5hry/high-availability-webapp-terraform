@@ -100,18 +100,15 @@ resource "aws_security_group" "rds_sg" {
   vpc_id      = var.vpc_id
   name        = "DB Subnet SG"
   description = "Allow connection from app subnets"
+
+
   ingress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
     security_groups = var.private_security_groups
   }
-    ingress {
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
-cidr_blocks = ["27.2.17.184/32"]
-  }
+
   egress {
     from_port   = 0
     to_port     = 0
