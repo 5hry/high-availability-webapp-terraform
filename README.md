@@ -9,7 +9,7 @@ Dự án này triển khai một ứng dụng web với kiến trúc **High Avai
   <p><em>Hình 1: Kiến trúc triển khai ứng dụng trên AWS</em></p>
 </div>
 
-Source code cho ứng dụng web [tại đây](https://github.com/5hry/e-commerce-web-bluegreen-deploy)
+Source code cho ứng dụng web [tại đây](https://github.com/5hry/e-commerce-web-bluegreen-deploy).
 
 ## Features
 
