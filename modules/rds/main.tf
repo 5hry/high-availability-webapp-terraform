@@ -1,26 +1,3 @@
-# resource "random_password" "master"{
-#   length           = 16
-#   special          = true
-#   override_special = "_!%^"
-# }
-
-# resource "aws_secretsmanager_secret" "password" {
-#   name = "project-db-password"
-# }
-
-# resource "aws_secretsmanager_secret_version" "password" {
-#   secret_id = aws_secretsmanager_secret.password.id
-#   secret_string = random_password.master.result
-# }
-
-# data "aws_secretsmanager_secret" "password" {
-#   name = "project-db-password"
-# }
-
-# data "aws_secretsmanager_secret_version" "password" {
-#   secret_id = data.aws_secretsmanager_secret.password
-# }
-
 
 resource "aws_db_subnet_group" "db-subnet-group" {
   name       = "my-db-subnet-group"
@@ -49,23 +26,6 @@ resource "aws_db_instance" "mysql-rds" {
 }
 
 
-# resource "aws_db_instance" "db" {
-#   allocated_storage = "20"
-#   storage_type      = "gp2"
-#   engine            = "mysql"
-#   engine_version    = "5.7.44"
-#   instance_class    = "db.t3.micro"
-#   username          = "admin"
-#   password          = "passwordhehehe"
-#   #   identifier             = "my-db-instance"
-#   db_subnet_group_name    = "my-db-subnet-group"
-#   vpc_security_group_ids  = [aws_security_group.rds_sg.id]
-#   backup_retention_period = 5
-#   skip_final_snapshot     = true
-#   tags = {
-#     Name = "My DB"
-#   }
-# }
 
 resource "aws_db_instance" "replica-mysql-rds" {
   instance_class          = "db.t3.micro"
@@ -79,22 +39,6 @@ resource "aws_db_instance" "replica-mysql-rds" {
 }
 
 
-# resource "aws_db_instance" "db_replica" {
-#   skip_final_snapshot     = true
-#   replicate_source_db     = aws_db_instance.db.identifier
-#   publicly_accessible     = false
-#   instance_class          = "db.t3.micro"
-#   identifier              = "db-replica"
-#   backup_retention_period = 1
-
-#   apply_immediately = true
-
-
-
-#   vpc_security_group_ids = [
-#     aws_security_group.rds_sg.id,
-#   ]
-# }
 
 resource "aws_security_group" "rds_sg" {
   vpc_id      = var.vpc_id

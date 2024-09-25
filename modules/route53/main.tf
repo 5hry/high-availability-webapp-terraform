@@ -1,18 +1,18 @@
 data "aws_route53_zone" "domain" {
-  name = "akaisme.click" # Replace with your hosted zone domain
+  name = var.domain_name # Replace with your hosted zone domain
 }
 
 
 resource "aws_route53_record" "ws2" {
   zone_id = data.aws_route53_zone.domain.id
-  name    = "ws2.akaisme.click"
+  name    = var.fully_domain_name
   type    = "CNAME"
   ttl     = 300
   records = [var.alb_dns_name]
 }
 
 resource "aws_acm_certificate" "acm_certificate" {
-  domain_name       = "ws2.akaisme.click"
+  domain_name       = var.fully_domain_name
   validation_method = "DNS"
 
   lifecycle {
