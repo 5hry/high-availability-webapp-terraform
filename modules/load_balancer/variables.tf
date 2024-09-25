@@ -10,3 +10,7 @@ variable "public_subnets_id" {
 variable "internet_gw" {
   type = string
 }
+
+variable "certificate_arn" {
+  type = string
+}
