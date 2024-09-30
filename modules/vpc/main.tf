@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
 
 
   tags = {
-    Name = "Project VPC"
+    Name = "${var.app_name} VPC"
   }
 }
 
@@ -13,7 +13,7 @@ resource "aws_subnet" "public_subnets" {
   cidr_block        = element(var.public_subnet_cidrs, count.index)
   availability_zone = element(var.azs, count.index)
   tags = {
-    Name = "Public Subnets ${count.index + 1}"
+    Name = "${var.app_name} Public Subnets ${count.index + 1}"
   }
 }
 
@@ -23,7 +23,7 @@ resource "aws_subnet" "private_subnets" {
   cidr_block        = element(var.private_subnet_cidrs, count.index)
   availability_zone = element(var.azs, count.index)
   tags = {
-    Name = "Private Subnets ${count.index + 1}"
+    Name = "${var.app_name} Private Subnets ${count.index + 1}"
   }
 }
 
@@ -33,7 +33,7 @@ resource "aws_subnet" "database_subnets" {
   cidr_block        = element(var.database_subnet_cidrs, count.index)
   availability_zone = element(var.azs, count.index)
   tags = {
-    Name = "Database Subnets ${count.index + 1}"
+    Name = "${var.app_name} Database Subnets ${count.index + 1}"
   }
 }
 
@@ -41,7 +41,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "Project VPC Internet Gateway"
+    Name = "${var.app_name} Internet Gateway"
   }
 }
 
@@ -54,9 +54,8 @@ resource "aws_route_table" "second_rt" {
   }
 
   tags = {
-    Name = "2nd Route Table"
+    Name = "${var.app_name} 2nd Route Table"
   }
-
 }
 
 resource "aws_route_table" "nat_gw_rt" {
@@ -68,7 +67,7 @@ resource "aws_route_table" "nat_gw_rt" {
   }
 
   tags = {
-    Name = "NAT Route Table"
+    Name = "${var.app_name} NAT Route Table"
   }
 }
 
@@ -84,7 +83,7 @@ resource "aws_eip" "nat_gw_eip" {
   domain = "vpc"
 
   tags = {
-    Name = "EIP NAT"
+    Name = "${var.app_name} EIP NAT"
   }
 }
 
@@ -93,7 +92,7 @@ resource "aws_nat_gateway" "nat_gw" {
   subnet_id     = aws_subnet.public_subnets[0].id
 
   tags = {
-    Name = "NAT Gateway"
+    Name = "${var.app_name} NAT Gateway"
   }
 }
 

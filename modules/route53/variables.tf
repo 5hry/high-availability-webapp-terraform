@@ -9,5 +9,14 @@ variable "domain_name" {
 
 variable "fully_domain_name" {
   type = string
-  default = "ws2.akaisme.click"
+  default = "workshop2.akaisme.click"
+}
+
+variable "db" {
+  type = string
+  default = "db.akaisme.click"
+}
+
+variable "endpoint" {
+  type = string
 }

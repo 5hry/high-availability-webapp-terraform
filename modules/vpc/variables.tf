@@ -1,3 +1,8 @@
+variable "app_name" {
+  type = string
+  default = "Workshop2"
+}
+
 variable "public_subnet_cidrs" {
   type        = list(string)
   description = "Public Subnet CIDR values"
@@ -21,3 +26,4 @@ variable "azs" {
   description = "Availability Zones Name"
   default     = ["ap-southeast-1a", "ap-southeast-1b"]
 }
+

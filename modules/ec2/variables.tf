@@ -30,10 +30,15 @@ variable "vpc_id" {
   type = string
 }
 
-variable "load_balancer_id" {
-  type = string
-}
+# variable "load_balancer_id" {
+#   type = string
+# }
 
 variable "target_group_arn" {
   type = string
+}
+
+variable "my_IP" {
+  type = string
+  default = "27.2.17.184/32"
 }

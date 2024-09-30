@@ -1,6 +1,5 @@
 module "vpc" {
   source = "./modules/vpc"
-
 }
 
 module "ec2" {
@@ -8,7 +7,6 @@ module "ec2" {
   vpc_id             = module.vpc.vpc_id
   private_subnets_id = module.vpc.private_subnets
   public_subnets_id  = module.vpc.public_subnets
-  load_balancer_id   = module.loadbalancer.load_balancer_id
   target_group_arn   = module.loadbalancer.target_group_arn
 }
 
@@ -17,7 +15,7 @@ module "loadbalancer" {
   public_subnets_id = module.vpc.public_subnets
   vpc_id            = module.vpc.vpc_id
   internet_gw       = module.vpc.internet_gw.id
-  certificate_arn = module.route53.cert_arn
+  certificate_arn   = module.route53.cert_arn
 }
 
 module "database" {
@@ -30,4 +28,5 @@ module "database" {
 module "route53" {
   source       = "./modules/route53"
   alb_dns_name = module.loadbalancer.load_balancer_dns
+  endpoint     = module.database.rds_endpoint
 }

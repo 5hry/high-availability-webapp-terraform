@@ -1,4 +1,3 @@
-
 resource "aws_db_subnet_group" "db-subnet-group" {
   name       = "my-db-subnet-group"
   subnet_ids = var.database_subnets
@@ -6,7 +5,6 @@ resource "aws_db_subnet_group" "db-subnet-group" {
     Name = "My DB Subnet Group"
   }
 }
-
 
 resource "aws_db_instance" "mysql-rds" {
   allocated_storage       = 5
@@ -25,8 +23,6 @@ resource "aws_db_instance" "mysql-rds" {
   }
 }
 
-
-
 resource "aws_db_instance" "replica-mysql-rds" {
   instance_class          = "db.t3.micro"
   skip_final_snapshot     = true
@@ -38,8 +34,6 @@ resource "aws_db_instance" "replica-mysql-rds" {
   }
 }
 
-
-
 resource "aws_security_group" "rds_sg" {
   vpc_id      = var.vpc_id
   name        = "DB Subnet SG"
@@ -50,7 +44,8 @@ resource "aws_security_group" "rds_sg" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = var.private_security_groups
+    # security_groups = var.private_security_groups
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {

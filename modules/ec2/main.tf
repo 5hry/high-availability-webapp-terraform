@@ -17,6 +17,7 @@ resource "aws_launch_template" "instances_configuration" {
   }
 }
 
+
 data "aws_iam_instance_profile" "web_app_instance_profile" {
   name = "web-app-ec2"
 }
@@ -63,56 +64,34 @@ resource "aws_autoscaling_policy" "avg_cpu_policy_greater" {
     }
     target_value = 40.0
   }
-
 }
 
 resource "aws_security_group" "private_subnet_sg" {
   vpc_id      = var.vpc_id
   name        = "Private Subnet SG"
-  description = "Allow SSH from public subnet"
+  description = "Allow traffic from Public Subnets"
 
   ingress {
-    description     = "SSH ingress"
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.public_subnet_sg.id, ]
-  }
-  ingress {
-    description = "SSH ingress"
+    description = "SSH ingress from public subnets"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["27.2.17.184/32", "0.0.0.0/0"]
+    security_groups = [aws_security_group.public_subnet_sg.id, ]
   }
 
-  # Ingress rule to allow all ICMP traffic
   ingress {
-    from_port   = -1            # Allows all types of ICMP traffic
-    to_port     = -1            # Allows all ICMP codes
-    protocol    = "icmp"        # Protocol for ICMP
-    cidr_blocks = ["0.0.0.0/0"] # Allows traffic from all IPs
+    from_port   = -1          
+    to_port     = -1           
+    protocol    = "icmp"       
+    security_groups = [aws_security_group.public_subnet_sg.id, ]
   }
+
   ingress {
-    description = "SSH ingress"
+    description = "Http traffic"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    description = "SSH ingress"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    description = "SSH ingress"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.public_subnet_sg.id, ]
   }
   egress {
     description = "Allow all traffic to internet"
@@ -129,22 +108,14 @@ resource "aws_security_group" "private_subnet_sg" {
 resource "aws_security_group" "public_subnet_sg" {
   vpc_id      = var.vpc_id
   name        = "Public Subnet SG"
-  description = "Allow SSH from public subnet"
+  description = "Allow SSH from my home"
 
   ingress {
     description = "SSH ingress"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["27.2.17.184/32", ]
-  }
-
-  ingress {
-    description = "SSH ingress"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.my_IP, ]
   }
   egress {
     description = "Allow all traffic to internet"
